@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confess Untuk Kamu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <style>
+        /* Smooth background animation */
+        @keyframes backgroundAnimation {
+            0% { background-color: #f9fafb; }
+            50% { background-color: #e2e8f0; }
+            100% { background-color: #f9fafb; }
+        }
+
+        /* Smooth fade-in effect for the confession box */
+        .fade-in {
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Smooth hover animation for buttons */
+        .btn-hover:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
+
+        /* Background gradient */
+        .bg-gradient {
+            background: linear-gradient(135deg, rgba(255, 104, 126, 0.8), rgba(132, 106, 255, 0.8));
+        }
+
+        /* Blurred background image */
+        .bg-blurred {
+            background-image: url('assets/background.jpg');
+            background-size: cover;
+            background-position: center;
+            filter: blur(5px);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+        }
+
+        /* Centered and blurred content */
+        .content {
+            position: relative;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex justify-center items-center h-screen bg-gradient">
+    <!-- Blurred background image -->
+    <div class="bg-blurred"></div>
+
+    <div class="content bg-white p-6 rounded-lg shadow-lg text-center max-w-md fade-in">
+        <h1 class="text-2xl font-bold mb-4 text-pink-500">Aku Punya Sesuatu Untukmu...</h1>
+        <p class="mb-6 text-lg text-gray-700">Sebenarnya, aku sudah lama ingin bilang ini ke kamu. Tapi aku terlalu gugup untuk mengatakannya langsung. Jadi, aku buat ini khusus untukmu.</p>
+        <p class="text-xl font-semibold mb-6 text-red-500">Aku suka sama kamu ❤️</p>
+        
+        <form id="confessForm">
+            <button type="button" data-response="Aku Juga Sama" class="response-button btn-hover bg-green-500 text-white px-6 py-2 rounded mr-2">Aku Juga Sama</button>
+            <button type="button" data-response="Boleh Kita Temanan Dulu Aja" class="response-button btn-hover bg-yellow-500 text-white px-6 py-2 rounded">Boleh Kita Temanan Dulu Aja</button>
+        </form>
+
+        <p id="result" class="text-gray-600 mt-4 hidden">Pesanmu sudah dikirimkan! ❤️</p>
+    </div>
+
+    <!-- Audio Player with a free love song -->
+    <audio autoplay loop>
+        <source src="https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100737" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        // Initialize EmailJS after loading the emailjs-com script
+        emailjs.init("CkJDvKZEyFRrBK5L_"); // Replace with your correct public key
+
+        // Event listener for response buttons
+        document.querySelectorAll(".response-button").forEach((button) => {
+            button.addEventListener("click", function () {
+                const response = this.getAttribute("data-response");
+
+                // Send the response to EmailJS
+                emailjs.send("service_xu1ojxk", "template_ydepep7", {
+                    response: response,
+                    to_email: "bayu140908@gmail.com", // Replace with your email
+                }).then(function(response) {
+                    document.getElementById("result").classList.remove("hidden");
+                    console.log("Sukses!", response.status, response.text);
+                }, function(error) {
+                    console.error("Gagal mengirim pesan:", error);
+                    alert("Ups! Pesan gagal dikirim. Error: " + error.text); // Displaying error text in alert
+                });
+            });
+        });
+    </script>
+</body>
+</html>
